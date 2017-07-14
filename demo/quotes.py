@@ -28,8 +28,4 @@ if __name__ == '__main__':
     URL = 'http://quotes.toscrape.com/tag/humor/'
     quotes = QuoteMiner(URL)
     core.gear.mainloop()
-
-    print quotes
-
-
-
+    print(quotes)
