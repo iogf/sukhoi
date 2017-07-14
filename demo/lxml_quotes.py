@@ -45,9 +45,4 @@ if __name__ == '__main__':
     # As miners inherit from lists, you end up with
     # the desired structure containg the quotes and the
     # author descriptions.
-    print quotes
-
-
-
-
-
+    print(quotes)
