@@ -48,10 +48,4 @@ if __name__ == '__main__':
     URL = 'http://quotes.toscrape.com/'
     tags = TagMiner(URL)
     core.gear.mainloop()
-
-    print tags
-
-
-
-
-
+    print(tags)
