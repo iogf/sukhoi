@@ -4,10 +4,12 @@
 
 from sukhoi import MinerEHP, core
 
+
 class AuthorMiner(MinerEHP):
     def run(self, dom):
         elem = dom.fst('div', ('class', 'author-description'))
         self.append(elem.text())
+
 
 class QuoteMiner(MinerEHP):
     def run(self, dom):
@@ -21,8 +23,11 @@ class QuoteMiner(MinerEHP):
         quote = elem.fst('span', ('class', 'text'))
         author_url = elem.fst('a').attr['href']
 
-        return {'quote': quote.text(), 
-        'author':AuthorMiner(self.geturl(author_url))}
+        return {
+            'quote': quote.text(),
+            'author': AuthorMiner(self.geturl(author_url))
+        }
+
 
 class TagMiner(MinerEHP):
     acc = set()
@@ -30,19 +35,19 @@ class TagMiner(MinerEHP):
     def run(self, dom):
         tags = dom.find('a', ('class', 'tag'))
 
-        self.acc.update([(ind.text(), 
-        ind.attr['href']) for ind in tags])
+        self.acc.update([(ind.text(), ind.attr['href']) for ind in tags])
 
         elem = dom.fst('li', ('class', 'next'))
 
-        if elem: 
+        if elem:
             self.next(elem.fst('a').attr['href'])
-        else: 
+        else:
             self.extract_quotes()
-            
+
     def extract_quotes(self):
-        self.extend([(ind[0], 
-        QuoteMiner(self.geturl(ind[1]))) for ind in self.acc])
+        self.extend([(ind[0], QuoteMiner(self.geturl(ind[1])))
+                     for ind in self.acc])
+
 
 if __name__ == '__main__':
     URL = 'http://quotes.toscrape.com/'
@@ -50,8 +55,3 @@ if __name__ == '__main__':
     core.gear.mainloop()
 
     print(tags)
-
-
-
-
-
