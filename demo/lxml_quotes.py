@@ -1,5 +1,6 @@
 from sukhoi import MinerLXML, core
 
+
 class AuthorMiner(MinerLXML):
     def run(self, dom):
         # The dom object is a struct returned by fromstring.
@@ -11,6 +12,7 @@ class AuthorMiner(MinerLXML):
         elems = dom.xpath("//div[@class='author-description']")
         self.append(elems[0].text)
 
+
 class QuoteMiner(MinerLXML):
     def run(self, dom):
         # Grab all the quotes.
@@ -19,7 +21,7 @@ class QuoteMiner(MinerLXML):
 
         # Grab the link that points to the next page.
         next_page = dom.xpath("//li[@class='next']/a[@href][1]")
-        
+
         # If there is a next page then flies there to extract
         # the quotes.
         if next_page: self.next(next_page[0].get('href'))
@@ -33,8 +35,7 @@ class QuoteMiner(MinerLXML):
 
         # Return the desired structure, and tells AuthorMiner to fly
         # to the url that contains the author description.
-        return {'quote': quote, 
-        'author':AuthorMiner(self.geturl(author_url))}
+        return {'quote': quote, 'author': AuthorMiner(self.geturl(author_url))}
 
 
 if __name__ == '__main__':
@@ -46,8 +47,3 @@ if __name__ == '__main__':
     # the desired structure containg the quotes and the
     # author descriptions.
     print(quotes)
-
-
-
-
-
